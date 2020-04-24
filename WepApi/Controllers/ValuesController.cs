@@ -21,7 +21,7 @@ namespace WepApi.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<string>> Get()
         {
-            return new string[] { "value1", "value2","values 3 Azure DevOps" };
+            return new string[] { "value1", "value2","values 3 Azure DevOps", "values 4 Azure DevOps" };
         }
 
         // GET api/values/5
