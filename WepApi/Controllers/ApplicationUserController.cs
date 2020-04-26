@@ -49,7 +49,7 @@ namespace WepApi.Controllers
             }
             catch (Exception ex)
             {
-                throw;
+                throw ex;
             }
         }
 
