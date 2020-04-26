@@ -38,7 +38,7 @@ namespace WepApi.Controllers
             var applicationUser = new ApplicationUser()
             {
                 UserName = model.UserName,
-                Email = model.Email,
+                Email = model.Email,               
                 FullName = model.FullName,
                 LockoutEnd =DateTime.Now
             };
@@ -54,8 +54,7 @@ namespace WepApi.Controllers
         }
 
         [HttpPost]
-        [Route("Login")]
-        //Post:api/ApplicationUser/Register
+        [Route("Login")]      
         public async Task<IActionResult> Login(LoginModel model)
         {
             var user = await _userManager.FindByNameAsync(model.UserName);

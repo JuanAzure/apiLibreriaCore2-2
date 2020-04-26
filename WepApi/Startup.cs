@@ -84,9 +84,9 @@ namespace WepApi
                 app.UseDeveloperExceptionPage();
             }
             app.UseCors(
-                builder => builder.WithOrigins(Configuration["ApplicationSettings:Client_URL"].ToString())
+                builder => builder.WithOrigins("*")
                 .AllowAnyHeader()
-                .AllowAnyMethod());
+                .AllowAnyMethod()); ;
 
             app.UseAuthentication();
 
