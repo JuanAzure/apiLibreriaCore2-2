@@ -51,35 +51,29 @@ namespace WepApi
                 options.Password.RequiredLength = 4;
             });
 
-            services.AddCors(options => {
-                options.AddPolicy("Todos",
-                builder => builder.WithOrigins("*").WithHeaders("*").WithMethods("*"));
-
-            });
-
             services.AddCors();
 
             //Jwt Authentication
             var key = Encoding.UTF8.GetBytes(Configuration["ApplicationSettings:JWT_Secret"].ToString());
 
             services.AddAuthentication(x =>
-               {
-                   x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                   x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-                   x.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-               }).AddJwtBearer(x =>
-               {
-                   x.RequireHttpsMetadata = false;
-                   x.SaveToken = false;
-                   x.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
-                   {
-                       ValidateIssuerSigningKey = true,
-                       IssuerSigningKey = new SymmetricSecurityKey(key),
-                       ValidateIssuer = false,
-                       ValidateAudience=false,
-                       ClockSkew = TimeSpan.Zero
-                   };
-               });
+            {
+                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(x =>
+            {
+                x.RequireHttpsMetadata = false;
+                x.SaveToken = false;
+                x.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(key),
+                    ValidateIssuer = false,
+                    ValidateAudience = false,
+                    ClockSkew = TimeSpan.Zero
+                };
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -89,11 +83,10 @@ namespace WepApi
             {
                 app.UseDeveloperExceptionPage();
             }
-            app.UseCors("Todos");
-            //app.UseCors(
-            //    builder => builder.WithOrigins("*")
-            //    .AllowAnyHeader()
-            //    .AllowAnyMethod()); 
+            app.UseCors(
+                builder => builder.WithOrigins(Configuration["ApplicationSettings:Client_URL"].ToString())
+                .AllowAnyHeader()
+                .AllowAnyMethod());
 
             app.UseAuthentication();
 
