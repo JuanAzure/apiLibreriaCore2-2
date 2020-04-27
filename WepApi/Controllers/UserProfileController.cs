@@ -4,8 +4,10 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting.Internal;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using WepApi.Models;
 
 namespace WepApi.Controllers
@@ -34,6 +36,8 @@ namespace WepApi.Controllers
                 user.Email,
                 user.UserName
             };
+
+
         }
     }
 }

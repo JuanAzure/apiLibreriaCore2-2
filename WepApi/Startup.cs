@@ -51,6 +51,12 @@ namespace WepApi
                 options.Password.RequiredLength = 4;
             });
 
+            services.AddCors(options => {
+                options.AddPolicy("Todos",
+                builder => builder.WithOrigins("*").WithHeaders("*").WithMethods("*"));
+
+            });
+
             services.AddCors();
 
             //Jwt Authentication
@@ -83,10 +89,11 @@ namespace WepApi
             {
                 app.UseDeveloperExceptionPage();
             }
-            app.UseCors(
-                builder => builder.WithOrigins(Configuration["ApplicationSettings:Client_URL"].ToString())
-                .AllowAnyHeader()
-                .AllowAnyMethod());
+            app.UseCors("Todos");
+            //app.UseCors(
+            //    builder => builder.WithOrigins("*")
+            //    .AllowAnyHeader()
+            //    .AllowAnyMethod()); 
 
             app.UseAuthentication();
 

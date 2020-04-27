@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using WepApi.Models;
@@ -38,7 +39,7 @@ namespace WepApi.Controllers
             var applicationUser = new ApplicationUser()
             {
                 UserName = model.UserName,
-                Email = model.Email,
+                Email = model.Email,               
                 FullName = model.FullName,
                 LockoutEnd =DateTime.Now
             };
@@ -49,13 +50,12 @@ namespace WepApi.Controllers
             }
             catch (Exception ex)
             {
-                throw;
+                throw ex;
             }
         }
 
         [HttpPost]
-        [Route("Login")]
-        //Post:api/ApplicationUser/Register
+        [Route("Login")]      
         public async Task<IActionResult> Login(LoginModel model)
         {
             var user = await _userManager.FindByNameAsync(model.UserName);
@@ -81,5 +81,19 @@ namespace WepApi.Controllers
             else
                 return BadRequest(new { Message = "username or password is incorrect." });
         }
+
+
+
+        [HttpGet]
+        [Route("leer")]
+
+        public async Task<IActionResult> Leer()
+        {
+
+            var author = await _userManager.Users.FirstAsync();
+
+            return Ok(new { author });
+        }
+
     }
 }
